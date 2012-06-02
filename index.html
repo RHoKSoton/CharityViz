@@ -41,9 +41,6 @@
     </div>
 
     <script type="application/x-underscore-template" id="project-retrieve-sparql-template">
-        PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
-        PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
-
         SELECT * WHERE { 
             activity:{{{ project_id }}} dc:title ?title;
                        dc:description ?description.
@@ -51,10 +48,6 @@
     </script>
 
 	<script type="text/x-handlebars-template" id="participant-retrieve-sparql-template">
-		PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
-		PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
-		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
 		SELECT ?participantTitle WHERE { 
 			activity:{{{ project_id }}} iati:participatingOrg ?participating.
 			?participating rdfs:seeAlso ?actualParticipant.
@@ -64,9 +57,6 @@
 	</script>
 
     <script type="text/x-handlebars-template" id="transaction-retrieve-sparql-template">
-        PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
-        PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
-
 		SELECT * WHERE {
 			activity:{{{ project_id }}} iati:transaction ?transaction .
 			?transaction iati:transactionIsoDate ?date;
