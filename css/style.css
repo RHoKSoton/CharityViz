@@ -2,6 +2,8 @@
 	color:red;
 }
 
-.modal {
-	width:800px !important;
+.popover-content {
+	max-height:200px;
+	overflow:hidden;
+	text-overflow: ellipsis;
 }

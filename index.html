@@ -29,11 +29,7 @@
                 <p>More and more data on aid activities is available in the common <a href="http://www.iatistandard.org">International Aid Transparency Initiative standard</a>, but to bring that data to life we need to take it from where it sits on the IATI Registry, and put it into context.</p>
 
                 <h3>Context widegets, linked data</h3>
-                <p>Roll your mouse over the link to
-                <a data-itai="GB-1-113933">
-                    Unicef Water and Sanitation
-                </a>
-				and you should see a pop up of information all about it. We're working to add more information to these pop-ups. The information comes direct from a <a href="http://kasabi.com/dataset/iati">Linked Data version of IATI data</a>, so that more data can be integrated in the future.</p>
+                Roll your mouse over the link to <a class="project-info-trigger" data-iati="44000-P048204">Unicef Water and Sanitation</a> and you should see a pop up of information all about it. We're working to add more information to these pop-ups. The information comes direct from a <a href="http://kasabi.com/dataset/iati">Linked Data version of IATI data</a>, so that more data can be integrated in future. 
 
                 <h3>Simple embedding</h3>
                 <p>To activate the tool simply add the relevent <code>data-itai</code> attribute to an element.</p>
@@ -52,7 +48,8 @@
     <script type="application/x-underscore-template" id="project-retrieve-sparql-template">
         SELECT * WHERE { 
             activity:{{{ project_id }}} dc:title ?title;
-                       dc:description ?description.
+                       dc:description ?description;
+					   iati:activityWebsiteUrl ?webSite.
         } 
     </script>
 
@@ -65,7 +62,23 @@
 		}
 	</script>
 
-    <script type="text/x-handlebars-template" id="transaction-retrieve-sparql-template">
+	<script type="text/x-handlebars-template" id="provider-retrieve-sparql-template">
+	SELECT DISTINCT ?provider ?title WHERE {
+		?trans iati:providerOrg ?provider.
+		?provider dc:title ?title.
+		activity:{{{ project_id }}} iati:transaction ?trans .
+	}
+	</script>
+	
+	<script type="text/x-handlebars-template" id="receiver-retrieve-sparql-template">
+	SELECT DISTINCT ?receiver ?title WHERE {
+		?trans iati:receiverOrg ?receiver.
+		?receiver dc:title ?title.
+		activity:{{{ project_id }}} iati:transaction ?trans .
+	}
+	</script>
+    
+	<script type="text/x-handlebars-template" id="transaction-retrieve-sparql-template">
 		SELECT * WHERE {
 			activity:{{{ project_id }}} iati:transaction ?transaction .
 			?transaction iati:transactionIsoDate ?date;
@@ -75,24 +88,23 @@
     </script>
 
     <script type="text/x-handlebars-template" id="project-view-template">
-        <div class="modal hide" id="{{id}}">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h3 class="project-name">Project Name <small class="charity-name">Charity Name</small></h3>
-            </div>
-            <div class="modal-body">
-                <p>Stuff</p>
-            </div>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3 class="project-name">{{ title }} <small class="charity-name">{{ organisation }}</small></h3>
+        </div>
+        <div class="modal-body">
+            {{organisations}}
+            <p>{{ description }}</p>
         </div>
     </script>
 
     <script type="text/x-handlebars-template" id="project-popover-template">
-        {{ description }}
+        <div class="popover-content-container">{{ description }}</div>
     </script>
 
     <script>
         $(function() {
-            $('[data-itai]').projectViz('http://api.kasabi.com/dataset/iati/apis/sparql?apikey=92912a588c30a6617ac21a69412b9a22f7f6e34d');
+            $('.project-info-trigger').projectViz('http://api.kasabi.com/dataset/iati/apis/sparql?apikey=92912a588c30a6617ac21a69412b9a22f7f6e34d');
         });
     </script>
 
