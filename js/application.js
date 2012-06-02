@@ -1,5 +1,6 @@
 $(window).load(function() {
 
+	var projects = {};
 	var Project = Backbone.Model.extend({});
 	var projectViewTemplate = $('#project-view-template').html();
 
@@ -8,7 +9,7 @@ $(window).load(function() {
 		template: _.template(projectViewTemplate),
 
 		initialise: function() {
-
+			this.model.on('change', this.render, this);
 		},
 
 		render: function() {
@@ -17,10 +18,12 @@ $(window).load(function() {
 		},
 	});
 
-	var project = new Project();
-	var projectView = new ProjectView({
-		el: $('#modal-test'),
-		model: project
-	}).render();
+	// TODO: perform initial queries
+
+	// var project = new Project();
+	// var projectView = new ProjectView({
+	// 	el: $('#modal-test'),
+	// 	model: project
+	// }).render();
 
 });

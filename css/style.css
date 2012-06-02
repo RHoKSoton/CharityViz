@@ -11,6 +11,9 @@
 	 max-width: 100%;
 }
 
+.project-info-trigger {
+	color:red;
+}
 
 .modal {
 	width:800px !important;

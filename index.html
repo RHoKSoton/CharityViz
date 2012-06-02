@@ -18,10 +18,25 @@
   <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
-	<div id="modal-test">
+	<div class="container">
+		<div class="row">
+			<div class="span8 offset2" style="margin-top:40px">
+				<h2>Blog Post</h2>
+				<hr/>
+				<h3>No man, I don't eat pork</h3>
+				Your bones don't break, mine do. That's clear. Your cells react to bacteria and viruses differently than mine. You don't get sick, I do. That's also clear. But for some reason, you and I react the exact same way to water. We swallow it too fast, we choke. We get some in our lungs, we drown. However unreal it may seem, we are connected, you and I. We're on the same curve, just on opposite ends.
 
+				<h3>Uuummmm, this is a tasty burger!</h3>
+				Now that there is the Tec-9, a crappy spray gun from <span class="project-info-trigger">South Miami</span>. This gun is advertised as the most popular gun in American crime. Do you believe that shit? It actually says that in the little book that comes with it: the most popular gun in American crime. Like they're actually proud of that shit. 
 
+				<h3>Hold on to your butts</h3>
+				Look, just because I don't be givin' no man a foot massage don't make it right for Marsellus to throw Antwone into a glass motherfuckin' house, fuckin' up the way the nigger talks. Motherfucker do that shit to me, he better paralyze my ass, 'cause I'll kill the motherfucker, know what I'm sayin'?
 
+				<h3>I can do that</h3>
+				Well, the way they make shows is, they make one show. That show's called a pilot. Then they show that show to the people who make shows, and on the strength of that one show they decide if they're going to make more shows. Some pilots get picked and become television programs. Some don't, become nothing. She starred in one of the ones that became nothing.
+
+			</div>
+		</div>
 	</div>
 
 	<script type="application/x-underscore-template" id="project-view-template">
@@ -38,6 +53,13 @@
 				<a href="#" class="btn btn-primary">Save changes</a>
 			</div>
 		</div>
+	</script>
+	<script type="application/x-underscore-template" id="project-popover-template">
+		<% if (name) { %>
+			Project Name
+		<% } else { %>
+			NO NAME
+		<% } %>
 	</script>
 	<script src="js/application.js"></script>
 </body>
