@@ -3,13 +3,13 @@
 	var Project = Backbone.Model.extend({});
 
 	// Templates
-	var projectViewTemplate = $('#project-view-template').html();
-	var projectPopoverTemplate = $('#project-popover-template').html();
-	var projectRetrieveSparqlTemplate = $('#project-retrieve-sparql-template').html();
+	var projectViewTemplate = Handlebars.compile($('#project-view-template').html());
+	var projectPopoverTemplate = Handlebars.compile($('#project-popover-template').html());
+	var projectRetrieveSparqlTemplate = Handlebars.compile($('#project-retrieve-sparql-template').html());
 
 	var ProjectView = Backbone.View.extend({
 		tagName: 'div',
-		template: _.template(projectViewTemplate),
+		template: projectViewTemplate,
 
 		initialise: function() {
 			this.model.on('change', this.render, this);
@@ -23,7 +23,7 @@
 	});
 
 	var ProjectPopover = Backbone.View.extend({
-		template: _.template(projectPopoverTemplate),
+		template: projectPopoverTemplate,
 
 		initialise: function() {
 			this.model.on('change', this.render, this);
@@ -57,7 +57,7 @@
 
 			var query = sparql.createQuery();
 			query.query(
-					_.template(projectRetrieveSparqlTemplate)({project_id:project.id}),
+					projectRetrieveSparqlTemplate({project_id:project.id}),
 					{
 						success: function(json) {
 
