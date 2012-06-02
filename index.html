@@ -52,6 +52,20 @@
         }
     </script>
 
+	<script type="text/x-handlebars-template" id="participant-retrieve-sparql-template">
+		PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
+		PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
+
+		SELECT ?participantTitle WHERE { 
+			activity:{{{ project_id }}} iati:relatedActivity ?relatedPlaceHolder.
+			?relatedPlaceHolder owl:sameAs ?related.
+			?related iati:participatingOrg ?participating.
+			?participating iati:participatingOrgRole "Implementing".
+			?participating <http://www.w3.org/2000/01/rdf-schema#seeAlso> ?actualParticipant.
+			?actualParticipant dc:title ?participantTitle.
+		}
+	</script>
+
     <script type="text/x-handlebars-template" id="transaction-retrieve-sparql-template">
         PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
         PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
