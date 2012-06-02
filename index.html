@@ -28,7 +28,7 @@
 				Your bones don't break, mine do. That's clear. Your cells react to bacteria and viruses differently than mine. You don't get sick, I do. That's also clear. But for some reason, you and I react the exact same way to water. We swallow it too fast, we choke. We get some in our lungs, we drown. However unreal it may seem, we are connected, you and I. We're on the same curve, just on opposite ends.
 
 				<h3>Uuummmm, this is a tasty burger!</h3>
-				Now that there is the Tec-9, a crappy spray gun from <a class="project-info-trigger" data-itai="GB-1-113933">Unicef Water and Sanitation</a>. This gun is advertised as the most popular gun in American crime. Do you believe that shit? It actually says that in the little book that comes with it: the most popular gun in American crime. Like they're actually proud of that shit. 
+				Now that there is the Tec-9, a crappy spray gun from <a class="project-info-trigger" data-iati="GB-1-113933">Unicef Water and Sanitation</a>. This gun is advertised as the most popular gun in American crime. Do you believe that shit? It actually says that in the little book that comes with it: the most popular gun in American crime. Like they're actually proud of that shit. 
 
 				<h3>Hold on to your butts</h3>
 				Look, just because I don't be givin' no man a foot massage don't make it right for Marsellus to throw Antwone into a glass motherfuckin' house, fuckin' up the way the nigger talks. Motherfucker do that shit to me, he better paralyze my ass, 'cause I'll kill the motherfucker, know what I'm sayin'?
@@ -67,16 +67,16 @@
 	</script>
 
 	<script type="application/x-underscore-template" id="project-view-template">
-		<div class="modal hide" id="<%= id %>">
+		<div class="modal fade" id="<%= id %>">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">×</button>
-				<h3 class="project-name">Project Name <small class="charity-name">Charity Name</small></h3>
+				<h3 class="project-name"><%= title %> <small class="charity-name">Charity Name</small></h3>
 			</div>
 			<div class="modal-body">
-				<p>Stuff</p>
+				<p><%= description %></p>
 			</div>
 			<div class="modal-footer">
-				<a href="#" class="btn">Close</a>
+				<a href="#" class="btn" data-dismiss="modal">Close</a>
 				<a href="#" class="btn btn-primary">Save changes</a>
 			</div>
 		</div>

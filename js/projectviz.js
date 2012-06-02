@@ -41,10 +41,10 @@
 
 		return this.each(function() {
 			var $this = $(this);
-			console.log($this.attr('data-itai'));
+			console.log($this.attr('data-iati'));
 
 			var project = new Project();
-			project.set({id:$this.attr('data-itai')});
+			project.set({id:$this.attr('data-iati')});
 
 			var sparql = new SPARQL.Service(url);
 			sparql.setPrefix("foaf", "http://xmlns.com/foaf/0.1/");
@@ -61,26 +61,33 @@
 					{
 						success: function(json) {
 
+							// Set the new stuff on the project model
 							project.set({
 								description: json.results.bindings[0].description.value,
 								title: json.results.bindings[0].title.value
 							});
 
+							// Setup the popover view
 							var projectPopover = new ProjectPopover({
 								model:project
 							}).render();
-
 							$this.popover({
 								title: project.get('title'),
 								content: projectPopover.el
 							});
 
+							// Setup the full project view
 							var projectView = new ProjectView({
 								model:project
 							}).render();
-
 							$('body').append(projectView.el);
-							$this.attr('data-toggle', project.get('id'));
+
+							// Setup the modal 
+							$this.attr('data-target', '#'+project.get('id'));
+							$this.attr('data-toggle', 'modal');
+							$('#'+project.get('id')).on('show', function() {
+								$($this).popover('hide');
+							});
 						},
 
 						failure: function() {
