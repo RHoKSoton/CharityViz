@@ -1,0 +1,3 @@
+[submodule "js/sparql"]
+	path = js/sparql
+	url = git://github.com/graingert/sparql.js/
