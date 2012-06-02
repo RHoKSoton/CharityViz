@@ -1,6 +1,16 @@
-.static-modal {
+#modal-test {
 	margin: 50px auto 40px auto;
 }
+
+#modal-test .modal {
+	 position: relative; 
+	 top: auto; 
+	 left: auto; 
+	 margin: 0 auto; 
+	 z-index: 1; 
+	 max-width: 100%;
+}
+
 
 .modal {
 	width:800px !important;
