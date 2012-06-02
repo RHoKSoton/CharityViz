@@ -78,13 +78,29 @@
 	}
 	</script>
     
-	<script type="text/x-handlebars-template" id="transaction-retrieve-sparql-template">
-		SELECT * WHERE {
-			activity:{{{ project_id }}} iati:transaction ?transaction .
-			?transaction iati:transactionIsoDate ?date;
-			iati:value ?value;
-			dc:description ?description . 
-		}
+	<script type="text/x-handlebars-template" id="transaction-retrieve-sparql-template">        
+        SELECT * WHERE {    
+          activity:{{{ project_id }}} iati:transaction ?trans .
+          ?trans iati:value ?value;
+                 iati:valueCurrency ?valueCurrency;
+                 iati:transactionIsoDate ?date;
+                 dc:description ?description;
+                 iati:providerOrg ?providerOrg;
+                 iati:receiverOrg ?receiverOrg.
+          {
+            select ?providerTitle where {
+              activity:{{{ project_id }}} iati:transaction ?trans .
+              ?trans iati:providerOrg ?providerOrg .
+              ?providerOrg dc:title ?providerTitle . } LIMIT 1
+          }
+          
+          {
+            select ?recieverTitle where {
+              activity:{{{ project_id }}} iati:transaction ?trans .
+              ?trans iati:receiverOrg ?recieverOrg .
+              ?recieverOrg dc:title ?recieverTitle . } LIMIT 1
+          }
+        }
     </script>
 
     <script type="text/x-handlebars-template" id="project-view-template">
