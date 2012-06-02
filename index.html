@@ -67,7 +67,7 @@
 	PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
 
 	SELECT DISTINCT ?provider ?title WHERE {
-		?trans iati:providerOrg ?provider.
+		?trans iati:providerOrg ?provider FILTER(!regex(str(?provider), "^http://data.kasabi.com/dataset/iati/org/$")).
 		?provider dc:title ?title.
 		activity:{{{ project_id }}} iati:transaction ?trans .
 	}
@@ -78,7 +78,7 @@
 	PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
 
 	SELECT DISTINCT ?receiver ?title WHERE {
-		?trans iati:receiverOrg ?receiver.
+		?trans iati:receiverOrg ?receiver FILTER(!regex(str(?receiver), "^http://data.kasabi.com/dataset/iati/org/$")).
 		?receiver dc:title ?title.
 		activity:{{{ project_id }}} iati:transaction ?trans .
 	}
