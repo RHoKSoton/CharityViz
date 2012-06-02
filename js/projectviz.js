@@ -89,11 +89,44 @@
 							});
 							$('#'+project.get('id')).on('show', function() {
 								$($this).popover('hide');
-								queryParticipant(project.get('id'));
+								var proj_id = project.get('id');
+								queryParticipant(proj_id);
+								queryProviders(proj_id);
+								queryReceivers(proj_id);
 							});
 						},
 						failure: function() {
 							console.log('Error retrieving project');
+						}
+					}
+				);
+			}
+			
+			function queryProviders(id) {
+				query.query(
+					Handlebars.compile($('#provider-retrieve-sparql-template').html())({project_id:id}),
+					{
+						success: function(json) {
+							console.log("Providers:");
+							console.log(json);
+						},
+						failure: function() {
+							console.log('Error retrieving providers');
+						}
+					}
+				);
+			}
+
+			function queryReceivers(id) {
+				query.query(
+					Handlebars.compile($('#receiver-retrieve-sparql-template').html())({project_id:id}),
+					{
+						success: function(json) {
+							console.log("Receivers:");
+							console.log(json);
+						},
+						failure: function() {
+							console.log('Error retrieving receivers');
 						}
 					}
 				);
