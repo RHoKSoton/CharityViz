@@ -5,7 +5,6 @@
 	// Templates
 	var projectViewTemplate = Handlebars.compile($('#project-view-template').html());
 	var projectPopoverTemplate = Handlebars.compile($('#project-popover-template').html());
-	var projectRetrieveSparqlTemplate = Handlebars.compile($('#project-retrieve-sparql-template').html());
 
 	var ProjectView = Backbone.View.extend({
 		tagName: 'div',
@@ -31,7 +30,6 @@
 
 		render: function() {
 			var attributes = this.model.toJSON();
-			console.log(attributes);
 			this.$el.html(this.template(attributes));
 			return this;
 		},
@@ -46,6 +44,33 @@
 			var project = new Project();
 			project.set({id:$this.attr('data-iati')});
 
+			function renderData(data) {
+  			project.set(data);
+
+  			// Setup the popover view
+				var projectPopover = new ProjectPopover({
+					model:project
+				}).render();
+				$this.popover({
+					title: project.get('title'),
+					content: projectPopover.el
+				});
+
+				// Setup the full project view
+				var projectView = new ProjectView({
+					model:project
+				}).render();
+				$('body').append(projectView.el);
+
+				// Setup the modal 
+				$this.attr('data-target', '#'+project.get('id'));
+				$this.attr('data-toggle', 'modal');
+				$('#'+project.get('id')).on('show', function() {
+					$($this).popover('hide');
+					queryParticipant(project.get('id'));
+				});
+  		}
+
 			var sparql = new SPARQL.Service(url);
 			sparql.setPrefix("foaf", "http://xmlns.com/foaf/0.1/");
 			sparql.setPrefix("dct", "http://purl.org/dc/terms/");
@@ -56,46 +81,38 @@
 			sparql.setMethod('POST');
 
 			var query = sparql.createQuery();
-			query.query(
-					projectRetrieveSparqlTemplate({project_id:project.id}),
+			queryProject(project.get('id'));
+
+			function queryProject(id) {
+				query.query(
+					Handlebars.compile($('#project-retrieve-sparql-template').html())({project_id:id}),
 					{
 						success: function(json) {
-
-							// Set the new stuff on the project model
-							project.set({
+							renderData({
 								description: json.results.bindings[0].description.value,
 								title: json.results.bindings[0].title.value
 							});
-
-							// Setup the popover view
-							var projectPopover = new ProjectPopover({
-								model:project
-							}).render();
-							$this.popover({
-								title: project.get('title'),
-								content: projectPopover.el
-							});
-
-							// Setup the full project view
-							var projectView = new ProjectView({
-								model:project
-							}).render();
-							$('body').append(projectView.el);
-
-							// Setup the modal 
-							$this.attr('data-target', '#'+project.get('id'));
-							$this.attr('data-toggle', 'modal');
-							$('#'+project.get('id')).on('show', function() {
-								$($this).popover('hide');
-							});
 						},
-
 						failure: function() {
-							console.log('Oops, something went wrong. <sadface.jpg>');
+							console.log('Error retrieving project');
 						}
 					}
-			);
+				);
+			}
 
+			function queryParticipant(id) {
+				query.query(
+					Handlebars.compile($('#participant-retrieve-sparql-template').html())({project_id:id}),
+					{
+						success: function(json) {
+							console.log(json);
+						},
+						failure: function() {
+							console.log('Error retrieving participants');
+						}
+					}
+				);
+			}			
 
   	});
 
