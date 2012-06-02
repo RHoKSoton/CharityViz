@@ -24,6 +24,34 @@
 
 	</div>
 
+	<script type="application/x-underscore-template" id="project-retrieve-sparql-template">
+		PREFIX dc: <http://purl.org/dc/elements/1.1/>
+		PREFIX owl: <http://www.w3.org/2002/07/owl#>
+		PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
+		PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
+
+		SELECT * WHERE { 
+  			activity:<%= project_id %> dc:title ?title;
+                       dc:description ?description.
+  			activity:<%= project_id %> iati:relatedActivity ?relatedPlaceHolder.
+  			?relatedPlaceHolder owl:sameAs ?related.
+		}
+	</script>
+
+	<script type="application/x-underscore-template" id="transaction-retrieve-sparql-template">
+		PREFIX dc: <http://purl.org/dc/elements/1.1/>
+		PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
+		PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
+
+		SELECT * WHERE { 
+		  activity:<%= project_sub_id %> iati:transaction ?transaction.
+  
+		  ?transaction iati:transactionIsoDate ?date;
+               iati:value ?value;
+               dc:description ?description.
+		}
+	</script>
+
 	<script type="application/x-underscore-template" id="project-view-template">
 		<div class="modal">
 			<div class="modal-header">
