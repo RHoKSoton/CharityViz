@@ -7,3 +7,29 @@
 	overflow:hidden;
 	text-overflow: ellipsis;
 }
+
+.left-arrow {
+	margin-top:3px;
+	margin-right:0px;
+	margin-left:10px;
+	width:0;
+	height:0;
+	border-top:12px solid transparent;
+	border-bottom:12px solid transparent;
+	border-right:12px solid #b94a48;
+}
+
+.right-arrow {
+	margin-top:3px;
+	margin-right:0px;
+	margin-left:10px;
+	width:0;height:0;
+	border-top:12px solid transparent;
+	border-bottom:12px solid transparent;
+	border-left:12px solid #468847;
+}
+
+.arrow {
+	width:20px;
+	height:20px;
+}

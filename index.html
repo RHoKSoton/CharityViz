@@ -14,6 +14,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.0.3/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0.beta6/handlebars.min.js"></script>
+    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
     <script src="js/sparql/sparql.js"></script>
 
     <link rel="stylesheet" href="css/style.css">
@@ -78,7 +79,7 @@
 	}
 	</script>
     
-	<script type="text/x-handlebars-template" id="transaction-retrieve-sparql-template">
+	<script type="text/x-handlebars-template" id="-retrieve-sparql-template">
 		SELECT * WHERE {
 			activity:{{{ project_id }}} iati:transaction ?transaction .
 			?transaction iati:transactionIsoDate ?date;
@@ -93,13 +94,42 @@
             <h3 class="project-name">{{ title }} <small class="charity-name">{{ organisation }}</small></h3>
         </div>
         <div class="modal-body">
-            {{organisations}}
-            <p>{{ description }}</p>
+            <table class="table table-striped">
+            	<thead>
+            		<tr>
+            			<th>Incoming</th>
+            			<th></th>
+            			<th>Outgoing</th>
+            		</tr>
+            	</thead>
+            	<tbody>
+            		<tr>
+            			<td><h3>Test</h3></td>
+            			<td><div class="right-arrow"></div></td>
+            			<td></td>
+            		</tr>
+            		<tr>
+            			<td></td>
+            			<td><div class="left-arrow"></div></td>
+            			<td><h3>Donation</h3></td>
+            		</tr>
+            		<tr>
+            			<td><h3>Test</h3></td>
+            			<td><div class="right-arrow"></div></td>
+            			<td></td>
+            		</tr>
+            	</tbody>
+            </table>
+            <hr/>
+            <p><small>{{ description }}</small></p>
         </div>
     </script>
 
     <script type="text/x-handlebars-template" id="project-popover-template">
-        <div class="popover-content-container">{{ description }}</div>
+        <div class="popover-content-container">
+        	{{ description }}
+        	<div id="map{{id}}"></div>
+        </div>
     </script>
 
     <script>

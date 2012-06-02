@@ -79,10 +79,15 @@
 					Handlebars.compile($('#project-retrieve-sparql-template').html())({project_id:id}),
 					{
 						success: function(json) {
+							console.log(json);
+							var countryCode = json.results.bindings[0].recipientCountry.value.substr(-2, 2);
+							console.log(countryCode);
 							project.set({
 								description: json.results.bindings[0].description.value,
-								title: json.results.bindings[0].title.value
+								title: json.results.bindings[0].title.value,
 							});
+							// Set up map
+							var map = new OpenLayers.Map("map" + project.get('id'));
 							$this.popover({
 								title: project.get('title'),
 								content: projectPopover.el
