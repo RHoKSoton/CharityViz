@@ -46,7 +46,8 @@
 
         SELECT * WHERE { 
             activity:{{{ project_id }}} dc:title ?title;
-                       dc:description ?description.
+                       dc:description ?description;
+					   iati:activityWebsiteUrl ?webSite.
         } 
     </script>
 
