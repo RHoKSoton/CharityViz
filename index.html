@@ -66,7 +66,29 @@
 		}
 	</script>
 
-    <script type="text/x-handlebars-template" id="transaction-retrieve-sparql-template">
+	<script type="text/x-handlebars-template" id="provider-retrieve-sparql-template">
+	PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
+	PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
+
+	SELECT DISTINCT ?provider ?title WHERE {
+		?trans iati:providerOrg ?provider.
+		?provider dc:title ?title.
+		activity:{{{ project_id }}} iati:transaction ?trans .
+	}
+	</script>
+	
+	<script type="text/x-handlebars-template" id="receiver-retrieve-sparql-template">
+	PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
+	PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
+
+	SELECT DISTINCT ?receiver ?title WHERE {
+		?trans iati:receiverOrg ?receiver.
+		?receiver dc:title ?title.
+		activity:{{{ project_id }}} iati:transaction ?trans .
+	}
+	</script>
+    
+	<script type="text/x-handlebars-template" id="transaction-retrieve-sparql-template">
 		SELECT * WHERE {
 			activity:{{{ project_id }}} iati:transaction ?transaction .
 			?transaction iati:transactionIsoDate ?date;

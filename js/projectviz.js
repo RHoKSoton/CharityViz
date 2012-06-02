@@ -6,6 +6,8 @@
 	var projectViewTemplate = Handlebars.compile($('#project-view-template').html());
 	var projectPopoverTemplate = Handlebars.compile($('#project-popover-template').html());
 	var projectRetrieveSparqlTemplate = Handlebars.compile($('#project-retrieve-sparql-template').html());
+	var providerRetrieveSparqlTemplate = Handlebars.compile($('#provider-retrieve-sparql-template').html());
+	var receiverRetrieveSparqlTemplate = Handlebars.compile($('#receiver-retrieve-sparql-template').html());
 
 	var ProjectView = Backbone.View.extend({
 		tagName: 'div',
