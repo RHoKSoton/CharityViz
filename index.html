@@ -26,13 +26,22 @@
                 <h2>Project Widgets</h2>
                 <hr/>
                 <h3>Aid Data in Context</h3>
-                More and more data on aid activities is available in the common <a href="http://www.iatistandard.org">International Aid Transparency Initiative standard</a>, but to bring that data to life we need to take it from where it sits on the IATI Registry, and put it into context. 
+                <p>More and more data on aid activities is available in the common <a href="http://www.iatistandard.org">International Aid Transparency Initiative standard</a>, but to bring that data to life we need to take it from where it sits on the IATI Registry, and put it into context.</p>
 
                 <h3>Context widegets, linked data</h3>
-                Roll your mouse over the link to <a class="project-info-trigger" data-itai="GB-1-113933">Unicef Water and Sanitation</a> and you should see a pop up of information all about it. We're working to add more information to these pop-ups. The information comes direct from a <a href="http://kasabi.com/dataset/iati">Linked Data version of IATI data</a>, so that more data can be integrated in future. 
+                <p>Roll your mouse over the link to
+                <a data-itai="GB-1-113933">
+                    Unicef Water and Sanitation
+                </a>
+				and you should see a pop up of information all about it. We're working to add more information to these pop-ups. The information comes direct from a <a href="http://kasabi.com/dataset/iati">Linked Data version of IATI data</a>, so that more data can be integrated in the future.</p>
 
                 <h3>Simple embedding</h3>
-                Take a look at the code and you will see the pop-up appears simply by adding a class and <code>data-iati</code> attribute with a project ID making it easy for any website to add contextual information on IATI projects.
+                <p>To activate the tool simply add the relevent <code>data-itai</code> attribute to an element.</p>
+                
+                <pre class="prettyprint linenums">
+&lt;a data-itai=&quot;GB-1-113933&quot;&gt;
+    Unicef Water and Sanitation
+&lt;/a&gt;</pre>
 
                 <h3>Get involved</h3>
                 Find <A href="https://github.com/rhoksoton/charityviz/">the source code on GitHub</a> and get involved in developing the project further. Developed as part of RHOK Southampton - June 2012. 
@@ -41,9 +50,6 @@
     </div>
 
     <script type="application/x-underscore-template" id="project-retrieve-sparql-template">
-        PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
-        PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
-
         SELECT * WHERE { 
             activity:{{{ project_id }}} dc:title ?title;
                        dc:description ?description;
@@ -52,10 +58,6 @@
     </script>
 
 	<script type="text/x-handlebars-template" id="participant-retrieve-sparql-template">
-		PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
-		PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
-		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-
 		SELECT ?participantTitle WHERE { 
 			activity:{{{ project_id }}} iati:participatingOrg ?participating.
 			?participating rdfs:seeAlso ?actualParticipant.
@@ -65,9 +67,6 @@
 	</script>
 
     <script type="text/x-handlebars-template" id="transaction-retrieve-sparql-template">
-        PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
-        PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
-
 		SELECT * WHERE {
 			activity:{{{ project_id }}} iati:transaction ?transaction .
 			?transaction iati:transactionIsoDate ?date;
@@ -98,7 +97,7 @@
 
     <script>
         $(function() {
-            $('.project-info-trigger').projectViz('http://api.kasabi.com/dataset/iati/apis/sparql?apikey=92912a588c30a6617ac21a69412b9a22f7f6e34d');
+            $('[data-itai]').projectViz('http://api.kasabi.com/dataset/iati/apis/sparql?apikey=92912a588c30a6617ac21a69412b9a22f7f6e34d');
         });
     </script>
 

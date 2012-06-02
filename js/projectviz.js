@@ -47,11 +47,15 @@
 			project.set({id:$this.attr('data-itai')});
 
 			var sparql = new SPARQL.Service(url);
-			sparql.setPrefix("foaf", "http://xmlns.com/foaf/0.1/");
-			sparql.setPrefix("dct", "http://purl.org/dc/terms/");
-			sparql.setPrefix("rdfs", 'http://www.w3.org/2000/01/rdf-schema#');
+			sparql.setPrefix('foaf', "http://xmlns.com/foaf/0.1/");
+			sparql.setPrefix('dct', "http://purl.org/dc/terms/");
+			sparql.setPrefix('rdfs', 'http://www.w3.org/2000/01/rdf-schema#');
 			sparql.setPrefix('owl', 'http://www.w3.org/2002/07/owl#');
 			sparql.setPrefix('dc', 'http://purl.org/dc/elements/1.1/');
+			
+			sparql.setPrefix('iati', 'http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#');
+			sparql.setPrefix('activity', 'http://data.kasabi.com/dataset/iati/activity/');
+			
 			sparql.setOutput('json');
 			sparql.setMethod('POST');
 
