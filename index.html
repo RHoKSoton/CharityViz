@@ -29,7 +29,7 @@
                 More and more data on aid activities is available in the common <a href="http://www.iatistandard.org">International Aid Transparency Initiative standard</a>, but to bring that data to life we need to take it from where it sits on the IATI Registry, and put it into context. 
 
                 <h3>Context widegets, linked data</h3>
-                Roll your mouse over the link to <a class="project-info-trigger" data-iati="GB-1-113933">Unicef Water and Sanitation</a> and you should see a pop up of information all about it. We're working to add more information to these pop-ups. The information comes direct from a <a href="http://kasabi.com/dataset/iati">Linked Data version of IATI data</a>, so that more data can be integrated in future. 
+                Roll your mouse over the link to <a class="project-info-trigger" data-iati="44000-P048204">Unicef Water and Sanitation</a> and you should see a pop up of information all about it. We're working to add more information to these pop-ups. The information comes direct from a <a href="http://kasabi.com/dataset/iati">Linked Data version of IATI data</a>, so that more data can be integrated in future. 
 
                 <h3>Simple embedding</h3>
                 Take a look at the code and you will see the pop-up appears simply by adding a class and <code>data-iati</code> attribute with a project ID making it easy for any website to add contextual information on IATI projects.
@@ -47,21 +47,18 @@
         SELECT * WHERE { 
             activity:{{{ project_id }}} dc:title ?title;
                        dc:description ?description.
-            activity:{{{ project_id }}} iati:relatedActivity ?relatedPlaceHolder.
-            ?relatedPlaceHolder owl:sameAs ?related.
-        }
+        } 
     </script>
 
 		<script type="text/x-handlebars-template" id="participant-retrieve-sparql-template">
 			PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
 			PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
+			PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 			SELECT ?participantTitle WHERE { 
-				activity:{{{ project_id }}} iati:relatedActivity ?relatedPlaceHolder.
-				?relatedPlaceHolder owl:sameAs ?related.
-				?related iati:participatingOrg ?participating.
+				activity:{{{ project_id }}} iati:participatingOrg ?participating.
+				?participating rdfs:seeAlso ?actualParticipant.
 				?participating iati:participatingOrgRole "Implementing".
-				?participating <http://www.w3.org/2000/01/rdf-schema#seeAlso> ?actualParticipant.
 				?actualParticipant dc:title ?participantTitle.
 			}
 		</script>
@@ -69,35 +66,32 @@
     <script type="text/x-handlebars-template" id="transaction-retrieve-sparql-template">
         PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
         PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
-        
-        SELECT * WHERE {
-          { activity: {{{ project_id }}} iati:relatedActivity ?subid . }
-          { ?subid owl:sameAs ?activity . }
-          { ?activity iati:transaction ?transaction . }
-          { ?transaction iati:transactionIsoDate ?date;
-                       iati:value ?value;
-                         dc:description ?description . }
-        }
+
+		SELECT * WHERE {
+			activity:{{{ project_id }}} iati:transaction ?transaction .
+			?transaction iati:transactionIsoDate ?date;
+			iati:value ?value;
+			dc:description ?description . 
+		}
     </script>
 
     <script type="text/x-handlebars-template" id="project-view-template">
-        <div class="modal hide" id="{{id}}">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">×</button>
-                <h3 class="project-name">{{ title }} <small class="charity-name">{{ organisation }}</small></h3>
-            </div>
-            <div class="modal-body">
-                <p>{{ description }}</p>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn" data-dismiss="modal">Close</a>
-                <a href="#" class="btn btn-primary">Save changes</a>
-            </div>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3 class="project-name">{{ title }} <small class="charity-name">{{ organisation }}</small></h3>
+        </div>
+        <div class="modal-body">
+            {{organisations}}
+            <p>{{ description }}</p>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">Close</a>
+            <a href="#" class="btn btn-primary">Save changes</a>
         </div>
     </script>
 
     <script type="text/x-handlebars-template" id="project-popover-template">
-        {{ description }}
+        <div class="popover-content-container">{{ description }}</div>
     </script>
 
     <script>
