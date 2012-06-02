@@ -47,21 +47,18 @@
         SELECT * WHERE { 
             activity:{{{ project_id }}} dc:title ?title;
                        dc:description ?description.
-            activity:{{{ project_id }}} iati:relatedActivity ?relatedPlaceHolder.
-            ?relatedPlaceHolder owl:sameAs ?related.
-        }
+        } 
     </script>
 
 	<script type="text/x-handlebars-template" id="participant-retrieve-sparql-template">
 		PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
 		PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
+		PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 		SELECT ?participantTitle WHERE { 
-			activity:{{{ project_id }}} iati:relatedActivity ?relatedPlaceHolder.
-			?relatedPlaceHolder owl:sameAs ?related.
-			?related iati:participatingOrg ?participating.
+			activity:{{{ project_id }}} iati:participatingOrg ?participating.
+			?participating rdfs:seeAlso ?actualParticipant.
 			?participating iati:participatingOrgRole "Implementing".
-			?participating <http://www.w3.org/2000/01/rdf-schema#seeAlso> ?actualParticipant.
 			?actualParticipant dc:title ?participantTitle.
 		}
 	</script>
@@ -69,15 +66,13 @@
     <script type="text/x-handlebars-template" id="transaction-retrieve-sparql-template">
         PREFIX iati: <http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#>
         PREFIX activity: <http://data.kasabi.com/dataset/iati/activity/>
-        
-        SELECT * WHERE {
-          { activity: {{{ project_id }}} iati:relatedActivity ?subid . }
-          { ?subid owl:sameAs ?activity . }
-          { ?activity iati:transaction ?transaction . }
-          { ?transaction iati:transactionIsoDate ?date;
-                       iati:value ?value;
-                         dc:description ?description . }
-        }
+
+		SELECT * WHERE {
+			activity:{{{ project_id }}} iati:transaction ?transaction .
+			?transaction iati:transactionIsoDate ?date;
+			iati:value ?value;
+			dc:description ?description . 
+		}
     </script>
 
     <script type="text/x-handlebars-template" id="project-view-template">
