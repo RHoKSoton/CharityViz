@@ -147,7 +147,17 @@
             </table>
             {{/if}}
             <hr/>
-            <p><small>{{ description }}</small></p>
+            <h4>About</h4>
+            <p>{{ description }}</p>
+            {{#if address}}
+            <address>
+			        <strong>{{address.name}}</strong><br>
+			        {{address.line1}}<br>
+			        {{address.line2}}<br>
+			        <abbr title="Phone" class="initialism">P:</abbr> {{address.phone}}<br/>
+			        <abbr title="Email">E:</abbr> <a href="mailto:{{address.email}}">{{address.email}}</a>
+			      </address>
+			      {{/if}}
         </div>
     </script>
 

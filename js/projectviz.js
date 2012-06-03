@@ -80,8 +80,14 @@
 					Handlebars.compile($('#project-retrieve-sparql-template').html())({project_id:id}),
 					{
 						success: function(json) {
-							var countryCode = json.results.bindings[0].recipientCountry.value.substr(-2, 2);
-							var lonLat = countryCodeMap[countryCode];
+							if (json.results.bindings.length === 0) {
+								return;
+							};
+							var countryCode, lonLat = [0,0];
+							if (json.results.bindings[0].recipientCountry) {
+								countryCode = json.results.bindings[0].recipientCountry.value.substr(-2, 2);
+								lonLat = countryCodeMap[countryCode];
+							};
 
 							project.set({
 								description: json.results.bindings[0].description.value,
@@ -182,6 +188,7 @@
 					Handlebars.compile($('#transaction-retrieve-sparql-template').html())({project_id:id}),
 					{
 						success: function(json) {
+							console.log(json);
 							var transactions = [];
 							for (var i = 0; i < json.results.bindings.length; i++) {
 								var t = json.results.bindings[i];
