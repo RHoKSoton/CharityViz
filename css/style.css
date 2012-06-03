@@ -44,6 +44,11 @@
 
 [data-iati] {
     color:red;
+	border-bottom: 1px dotted red;
+}
+
+[data-iati]:hover {
+	text-decoration: none;
 }
 
 .popover-content {
