@@ -177,9 +177,11 @@
 
     <script type="text/x-handlebars-template" id="project-popover-template">
 	    <div id="map{{id}}" class="map"></div>
+        {{#if description}}
         <div class="popover-content-container">
-        	{{ description }}
+            {{ description }}
         </div>
+        {{/if}}
     </script>
 
     <script>
