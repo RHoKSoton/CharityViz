@@ -54,7 +54,7 @@
 
     <div id="s4" class="step" data-x="0" data-y="0" data-scale="4">
         <h1>Introducing...</h1>
-        <span class="try">jquery.CharityViz.js</span>
+        <span class="try">charityviz.js</span>
     </div>
 
     <div id="s5" class="step" data-x="2500" data-y="0" data-z="0" data-rotate-x="0" data-rotate-y="0" data-rotate-z="100" data-scale="1">
@@ -91,17 +91,25 @@
 var u = 'http://myservice.com/endpoint';
 
 $(function() {
-  $('[data-iati]').projectViz(u);
+  $('[data-iati]').charityViz(u);
 });</pre>
     </div>
 
-    <div id="s11" class="step" data-x="3000" data-y="4200" data-scale="2">
-        <pre class="prettyprint linenums" style="font-size:40px;line-height:50px">
-var u = 'http://myservice.com/endpoint';
+    <div id="s11" class="step" data-x="-2000" data-z="-1500" data-y="3000" data-rotate-z="90" data-scale="2">
+        <p>We've got loads more data we can add, and we want to present this in a way that is accessible to everyone.<br/><br/></p>
+    </div>
 
-$(function() {
-  $('[data-iati]').projectViz(u);
-});</pre>
+    <div id="s12" class="step" data-x="-3500" data-z="-1500" data-y="3000" data-rotate-z="90" data-scale="2">
+        <p>We hope we can work with the IATI in the future to make this happen and ensure that the project continues to evolve.</p>
+    </div>
+
+    <div id="s13" class="step" data-x="-5000" data-z="-1500" data-y="3000" data-rotate-x="90" data-rotate-z="0" data-scale="2">
+        <p>Thanks for watching.</p>
+        <a href="http://rhoksoton.github.com/CharityViz/">http://rhoksoton.github.com/CharityViz/</a><br/>
+        <br>by
+        <a href="http://twitter.com/mikejewell">@mikejewell</a>,
+        <a href="http://twitter.com/graingert">@graingert</a> and 
+        <a href="http://twitter.com/danpalmer">@danpalmer</a><br/>
     </div>
 
 </div>
@@ -170,10 +178,10 @@ $(function() {
         <div class="modal-body">
                 {{#if address}}
             <address>
-                    <strong>{{address.name}}</strong><br>
+                    <i class="icon-home"></i></i><strong>{{address.name}}</strong><br>
                     {{address.address}}<br>
-                    <i class="icon-envelope"></i> <a href="tel:{{address.phone}}">{{address.phone}}</a><br/>
-                    <abbr title="Email">E:</abbr> <a href="mailto:{{address.email}}">{{address.email}}</a>
+                    <i class="icon-phone">tell:</i><a href="tel:{{address.phone}}">{{address.phone}}</a><br/>
+                    <i class="icon-envelope"></i> <a href="mailto:{{address.email}}">{{address.email}}</a>
                   </address>
                   {{/if}}
                 {{#if transactions}}
@@ -191,11 +199,11 @@ $(function() {
                             <tr>
                                 <td class="td0"></td>
                                 <td class="td1"><div class="left-arrow"></div></td>
-                                <td class="td2"><b>{{this.receiver}}</b><br><small>{{this.description}}</small></td>
+                                <td class="td2"><b>{{this.receiver}}</b><br><small>{{this.description}}</small><br/><b>Amount: {{this.amount}}</b></td>
                             </tr>
                         {{else}}
                                         <tr>
-                                <td class="td0"><b>{{this.provider}}</b><br><small>{{this.description}}</small></td>
+                                <td class="td0"><b>{{this.provider}}</b><br><small>{{this.description}}</small><br/><b>Amount: {{this.amount}}</b></td>
                                 <td class="td1"><div class="right-arrow"></div></td>
                                 <td class="td2"></td>
                             </tr>
