@@ -44,6 +44,7 @@
                         <a data-iati="41AAA-00057337">Global Environment Facility (GEF) Small Grants Programme</a>
                     </li>
                 </ul>
+                
                 <h3>Simple embedding</h3>
                 <p>To activate the tool simply add the relevent <code>data-iati</code> attribute to an element.</p>
                 
@@ -58,7 +59,7 @@
         </div>
     </div>
 
-    <script type="application/x-underscore-template" id="project-retrieve-sparql-template">
+    <script type="application/x-handlebars-template" id="project-retrieve-sparql-template">
 		SELECT * WHERE {
 		  activity:{{{ project_id }}} dc:title ?title;
 								   dc:description ?description;
@@ -85,21 +86,6 @@
 		}
 	</script>
 
-	<script type="text/x-handlebars-template" id="provider-retrieve-sparql-template">
-	SELECT DISTINCT ?provider ?title WHERE {
-		?trans iati:providerOrg ?provider FILTER(!regex(str(?provider), "^http://data.kasabi.com/dataset/iati/org/$")).
-		?provider dc:title ?title.
-		activity:{{{ project_id }}} iati:transaction ?trans .
-	}
-	</script>
-
-	<script type="text/x-handlebars-template" id="receiver-retrieve-sparql-template">
-	SELECT DISTINCT ?receiver ?title WHERE {
-		?trans iati:receiverOrg ?receiver FILTER(!regex(str(?receiver), "^http://data.kasabi.com/dataset/iati/org/$")).
-		?receiver dc:title ?title.
-		activity:{{{ project_id }}} iati:transaction ?trans .
-	}
-	</script>
     
 	<script type="text/x-handlebars-template" id="transaction-retrieve-sparql-template">        
         SELECT * WHERE {    
