@@ -50,9 +50,15 @@
     <script type="application/x-underscore-template" id="project-retrieve-sparql-template">
         SELECT * WHERE { 
             activity:{{{ project_id }}} dc:title ?title;
-                       dc:description ?description;
-					   iati:recipientCountry ?recipientCountry;
-					   iati:activityWebsiteUrl ?webSite.
+					dc:description ?description;
+					iati:recipientCountry ?recipientCountry;
+					iati:activityWebsiteUrl ?webSite;
+					iati:contactInfoOrganisation ?contactInfo.
+			?contactInfo dc:title ?contactTitle;
+					iati:contactInfoEmail ?contactEmail;
+					iati:contactInfoPerson ?contactPerson;
+					iati:contactInfoPhone ?contactPhone;
+					iati:contactInfoAddress ?contactAddress.
         } 
     </script>
 
