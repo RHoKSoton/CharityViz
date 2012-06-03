@@ -120,10 +120,10 @@
         <div class="modal-body">
 	        	{{#if address}}
             <address>
-			        <strong>{{address.name}}</strong><br>
+			        <i class="icon-home"></i></i><strong>{{address.name}}</strong><br>
 			        {{address.address}}<br>
-			        <i class="icon-envelope"></i> <a href="tel:{{address.phone}}">{{address.phone}}</a><br/>
-			        <abbr title="Email">E:</abbr> <a href="mailto:{{address.email}}">{{address.email}}</a>
+                    <i class="icon-phone">tell:</i><a href="tel:{{address.phone}}">{{address.phone}}</a><br/>
+			        <i class="icon-envelope"></i> <a href="mailto:{{address.email}}">{{address.email}}</a>
 			      </address>
 			      {{/if}}
         		{{#if transactions}}
