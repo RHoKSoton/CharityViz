@@ -66,6 +66,7 @@
 			sparql.setPrefix('rdfs', 'http://www.w3.org/2000/01/rdf-schema#');
 			sparql.setPrefix('owl', 'http://www.w3.org/2002/07/owl#');
 			sparql.setPrefix('dc', 'http://purl.org/dc/elements/1.1/');
+			sparql.setPrefix('skos', 'http://www.w3.org/2004/02/skos/core#');
 			
 			sparql.setPrefix('iati', 'http://tools.aidinfolabs.org/linked-iati/def/iati-1.01#');
 			sparql.setPrefix('activity', 'http://data.kasabi.com/dataset/iati/activity/');
