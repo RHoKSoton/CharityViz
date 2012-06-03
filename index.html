@@ -28,13 +28,25 @@
                 <h2>Project Widgets</h2>
                 <hr/>
                 <h3>Aid Data in Context</h3>
-                <p>More and more data on aid activities is available in the common <a href="http://www.iatistandard.org">Petroleum Environment Capacity enhancement Project</a>, but to bring that data to life we need to take it from where it sits on the IATI Registry, and put it into context.</p>
+                <p>More and more data on aid activities is available in the common <a href="http://www.iatistandard.org">IATI Standard</a>, but to bring that data to life we need to take it from where it sits on the IATI Registry, and put it into context.</p>
 
                 <h3>Context widgets, linked data</h3>
-                Roll your mouse over the link to <a data-iati="44000-P048204">Petroleum Environment Capacity enhancement Project</a> and you should see a pop up of information all about it. We're working to add more information to these pop-ups. The information comes direct from a <a href="http://kasabi.com/dataset/iati">Linked Data version of IATI data</a>, so that more data can be integrated in future. 
-
+                Roll your mouse over the links and you should see a pop up of information all about it. We're working to add more information to these pop-ups. The information comes direct from a <a href="http://kasabi.com/dataset/iati">Linked Data version of IATI data</a>, so that more data can be integrated in future. 
+                
+                <ul>
+                    <li>
+                        <a data-iati="44000-P048204">Petroleum Environment Capacity enhancement Project</a>
+                    </li>
+                    <li>
+                        <a data-iati="GB-1-201642-101">Systematic Review Pilot</a>
+                    </li>
+                    <li>
+                        <a data-iati="41AAA-00057337">Global Environment Facility (GEF) Small Grants Programme</a>
+                    </li>
+                </ul>
+                
                 <h3>Simple embedding</h3>
-                <p>To activate the tool simply add the relevent <code>data-iati</code> attribute to an element.</p>
+                <p>To activate the tool simply add the relevant <code>data-iati</code> attribute to an element.</p>
                 
                 <pre class="prettyprint linenums">
 &lt;a data-iati=&quot;44000-P048204&quot;&gt;
@@ -47,7 +59,7 @@
         </div>
     </div>
 
-    <script type="application/x-underscore-template" id="project-retrieve-sparql-template">
+    <script type="application/x-handlebars-template" id="project-retrieve-sparql-template">
 		SELECT * WHERE {
 		  activity:{{{ project_id }}} dc:title ?title;
 								   dc:description ?description;
@@ -74,21 +86,6 @@
 		}
 	</script>
 
-	<script type="text/x-handlebars-template" id="provider-retrieve-sparql-template">
-	SELECT DISTINCT ?provider ?title WHERE {
-		?trans iati:providerOrg ?provider FILTER(!regex(str(?provider), "^http://data.kasabi.com/dataset/iati/org/$")).
-		?provider dc:title ?title.
-		activity:{{{ project_id }}} iati:transaction ?trans .
-	}
-	</script>
-
-	<script type="text/x-handlebars-template" id="receiver-retrieve-sparql-template">
-	SELECT DISTINCT ?receiver ?title WHERE {
-		?trans iati:receiverOrg ?receiver FILTER(!regex(str(?receiver), "^http://data.kasabi.com/dataset/iati/org/$")).
-		?receiver dc:title ?title.
-		activity:{{{ project_id }}} iati:transaction ?trans .
-	}
-	</script>
     
 	<script type="text/x-handlebars-template" id="transaction-retrieve-sparql-template">        
         SELECT * WHERE {    
@@ -118,9 +115,17 @@
     <script type="text/x-handlebars-template" id="project-view-template">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">×</button>
-            <h3 class="project-name">{{ title }} <small class="charity-name">{{ organisation }}</small></h3>
+            <h3 class="project-name">{{ title }}<small class="charity-name">{{ organisation }}</small></h3>
         </div>
         <div class="modal-body">
+	        	{{#if address}}
+            <address>
+			        <strong>{{address.name}}</strong><br>
+			        {{address.address}}<br>
+			        <i class="icon-envelope"></i> <a href="tel:{{address.phone}}">{{address.phone}}</a><br/>
+			        <abbr title="Email">E:</abbr> <a href="mailto:{{address.email}}">{{address.email}}</a>
+			      </address>
+			      {{/if}}
         		{{#if transactions}}
             <table class="table table-striped transactions-table">
             	<thead>
@@ -152,22 +157,16 @@
             <hr/>
             <h4>About</h4>
             <p>{{ description }}</p>
-            {{#if address}}
-            <address>
-			        <strong>{{address.name}}</strong><br>
-			        {{address.address}}<br>
-			        <abbr title="Phone" class="initialism">P:</abbr> <a href="tel:{{address.phone}}">{{address.phone}}</a><br/>
-			        <abbr title="Email">E:</abbr> <a href="mailto:{{address.email}}">{{address.email}}</a>
-			      </address>
-			      {{/if}}
         </div>
     </script>
 
     <script type="text/x-handlebars-template" id="project-popover-template">
-	    <div id="map{{id}}" class="map"></div>
+	    <div class="map"></div>
+        {{#if description}}
         <div class="popover-content-container">
-        	{{ description }}
+            {{ description }}
         </div>
+        {{/if}}
     </script>
 
     <script>

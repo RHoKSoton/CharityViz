@@ -54,6 +54,8 @@
 				el:$('#'+project.get('id'))
 			}).render();
 
+			var map;
+
 			// Setup the modal 
 			$this.attr('data-target', '#'+project.get('id'));
 			$this.attr('data-toggle', 'modal');
@@ -73,7 +75,6 @@
 
 			var query = sparql.createQuery();
 			queryProject(project.get('id'));
-			var map;
 
 			function queryProject(id) {
 				query.query(
@@ -106,14 +107,18 @@
 								project.set({address:address});
 							};
 
-							$this.popover({
-								title: project.get('title'),
-								content: projectPopover.el
-							}).on('hover', function() {
+							function hideHover() {
+								var mapEl = projectPopover.$el.find('.map');
+								if(map) { map.destroy(); }
+								mapEl.empty();
+								$($this).popover('hide');
+							}
+
+							function showHover() {
 								// Set up map
-								if (map) {return;};
 								var ll = new OpenLayers.LonLat(lonLat[1],lonLat[0]);
-								map = new OpenLayers.Map("map" + project.get('id'), {
+								var mapEl = projectPopover.$el.find('.map');
+								var map = new OpenLayers.Map(mapEl.get(0), {
 									controls:[]
 								});
 								var mapnik         = new OpenLayers.Layer.OSM();
@@ -131,16 +136,23 @@
 								var icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png', size, offset);
 								markers.addMarker(new OpenLayers.Marker(ll,icon));
 								markers.addMarker(new OpenLayers.Marker(ll,icon.clone()));
-							});
+							}
+
+							$this.popover({
+								title: project.get('title'),
+								content: projectPopover.el
+							}).on('mouseenter', showHover).on('mouseleave', hideHover);
 
 							$('#'+project.get('id')).on('show', function() {
-								$($this).popover('hide');
+								$this.off('mouseenter', showHover).off('mouseleave', hideHover);
+								hideHover();
 								var proj_id = project.get('id');
 								queryParticipant(proj_id);
-								queryProviders(proj_id);
-								queryReceivers(proj_id);
 								queryTransactions(proj_id);
+							}).on('hidden', function() {
+								$this.on('mouseenter', showHover).on('mouseleave', hideHover);
 							});
+
 						},
 						failure: function() {
 							console.log('Error retrieving project');
@@ -149,35 +161,6 @@
 				);
 			}
 			
-			function queryProviders(id) {
-				query.query(
-					Handlebars.compile($('#provider-retrieve-sparql-template').html())({project_id:id}),
-					{
-						success: function(json) {
-							console.log("Providers:");
-							console.log(json);
-						},
-						failure: function() {
-							console.log('Error retrieving providers');
-						}
-					}
-				);
-			}
-
-			function queryReceivers(id) {
-				query.query(
-					Handlebars.compile($('#receiver-retrieve-sparql-template').html())({project_id:id}),
-					{
-						success: function(json) {
-							console.log("Receivers:");
-							console.log(json);
-						},
-						failure: function() {
-							console.log('Error retrieving receivers');
-						}
-					}
-				);
-			}
 
 			function queryParticipant(id) {
 				query.query(
