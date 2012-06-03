@@ -81,7 +81,6 @@
 					Handlebars.compile($('#project-retrieve-sparql-template').html())({project_id:id}),
 					{
 						success: function(json) {
-							console.log(json);
 							if (json.results.bindings.length === 0) {
 								return;
 							};
