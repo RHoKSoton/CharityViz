@@ -97,13 +97,14 @@
                  iati:providerOrg ?providerOrg;
                  iati:receiverOrg ?receiverOrg.
           
-        {
+         {
             select ?type where {
                 activity:{{{ project_id }}} iati:transaction ?trans .
                 ?trans iati:transactionType ?txtype  .
                 ?txtype skos:prefLabel ?type .
             }
-        }
+          }
+          
           {
             select ?providerTitle where {
               activity:{{{ project_id }}} iati:transaction ?trans .
@@ -127,12 +128,12 @@
         </div>
         <div class="modal-body">
 	        	{{#if address}}
-            <address>
-			        <i class="icon-home"></i></i><strong>{{address.name}}</strong><br>
-			        {{address.address}}<br>
-                    <i class="icon-phone">tell:</i><a href="tel:{{address.phone}}">{{address.phone}}</a><br/>
-			        <i class="icon-envelope"></i> <a href="mailto:{{address.email}}">{{address.email}}</a>
-			      </address>
+                    <address>
+                        <strong>{{address.name}}</strong><br>
+                        {{address.address}}<br>
+                        <a href="tel:{{address.phone}}">{{address.phone}}</a><br/>
+                        <a href="mailto:{{address.email}}">{{address.email}}</a>
+                    </address>
 			      {{/if}}
         		{{#if transactions}}
             <table class="table table-striped transactions-table">
@@ -162,9 +163,11 @@
             	</tbody>
             </table>
             {{/if}}
-            <hr/>
-            <h4>About</h4>
-            <p>{{ description }}</p>
+            {{#if description}} 
+                <hr/>
+                <h4>About</h4>
+                <p>{{ description }}</p>
+            {{/if}}
         </div>
 		<div class="modal-footer">
 			<a href="http://data.kasabi.com/dataset/iati/activity/{{id}}.html" target="_blank"><img border="0" src="http://assets.okfn.org/images/ok_buttons/od_80x15_blue.png" /></a>
