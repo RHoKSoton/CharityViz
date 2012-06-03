@@ -44,6 +44,11 @@
         <q>There is a lot of available data about charities and their projects, but no one knows where it is.</q>
     </div>
 
+    <div id="s1-1" class="step slide" data-x="-1000" data-y="-1500" data-z="-2000">
+        <q>The <b>International Aid Transparency Initiative</b> is leading the way providing open data for many projects happening all over the world.</q>
+        <img src="http://www.aidtransparency.net/wp-content/themes/iati/img/iati-logo.png"/>
+    </div>
+
     <div id="s2" class="step slide" data-x="0" data-y="-1500">
         <q>Charities are being told to make more of their data public, but aren't seeing any use of it.</q>
     </div>
@@ -95,8 +100,43 @@ $(function() {
 });</pre>
     </div>
 
-    <div id="s11" class="step" data-x="-2000" data-z="-1500" data-y="3000" data-rotate-z="90" data-scale="2">
-        <p>We've got loads more data we can add, and we want to present this in a way that is accessible to everyone.<br/><br/></p>
+    <div id="s11" class="step slide" data-x="-2000" data-z="-1500" data-y="3000" data-rotate-z="90" data-scale="2">
+        <q>We've got loads more data we can add, and we want to present this in a way that is accessible to everyone.<br/><br/><br/>How does it work?</q>
+    </div>
+
+    <div id="s11-2" class="step" data-x="-2000" data-z="-7000" data-y="3000" data-rotate-z="90" data-scale="2">
+        <pre>
+SELECT * WHERE {    
+  activity:{{{ project_id }}} iati:transaction ?trans .
+  ?trans iati:value ?value;
+         iati:valueCurrency ?valueCurrency;
+         iati:transactionIsoDate ?date;
+         dc:description ?description;
+         iati:providerOrg ?providerOrg;
+         iati:receiverOrg ?receiverOrg.
+  
+{
+    select ?type where {
+        activity:{{{ project_id }}} iati:transaction ?trans .
+        ?trans iati:transactionType ?txtype  .
+        ?txtype skos:prefLabel ?type .
+    }
+}
+  {
+    select ?providerTitle where {
+      activity:{{{ project_id }}} iati:transaction ?trans .
+      ?trans iati:providerOrg ?providerOrg .
+      ?providerOrg dc:title ?providerTitle . } LIMIT 1
+  }
+  
+  {
+    select ?receiverTitle where {
+      activity:{{{ project_id }}} iati:transaction ?trans .
+      ?trans iati:receiverOrg ?receiverOrg .
+      ?recieverOrg dc:title ?receiverTitle . } LIMIT 1
+  }
+}
+</pre>
     </div>
 
     <div id="s12" class="step" data-x="-3500" data-z="-1500" data-y="3000" data-rotate-z="90" data-scale="2">
