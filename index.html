@@ -155,9 +155,8 @@
             {{#if address}}
             <address>
 			        <strong>{{address.name}}</strong><br>
-			        {{address.line1}}<br>
-			        {{address.line2}}<br>
-			        <abbr title="Phone" class="initialism">P:</abbr> {{address.phone}}<br/>
+			        {{address.address}}<br>
+			        <abbr title="Phone" class="initialism">P:</abbr> <a href="tel:{{address.phone}}">{{address.phone}}</a><br/>
 			        <abbr title="Email">E:</abbr> <a href="mailto:{{address.email}}">{{address.email}}</a>
 			      </address>
 			      {{/if}}

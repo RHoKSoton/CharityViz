@@ -80,6 +80,7 @@
 					Handlebars.compile($('#project-retrieve-sparql-template').html())({project_id:id}),
 					{
 						success: function(json) {
+							console.log(json);
 							if (json.results.bindings.length === 0) {
 								return;
 							};
@@ -93,6 +94,17 @@
 								description: json.results.bindings[0].description.value,
 								title: json.results.bindings[0].title.value,
 							});
+
+							if (json.results.bindings[0].contactInfo) {
+								var obj = json.results.bindings[0];
+								var address = {};
+								address.name = obj.contactTitle.value;
+								address.address = obj.contactAddress.value;
+								address.email = obj.contactEmail.value;
+								address.person = obj.contactPerson.value;
+								address.phone = obj.contactPhone.value;
+								project.set({address:address});
+							};
 
 							$this.popover({
 								title: project.get('title'),
