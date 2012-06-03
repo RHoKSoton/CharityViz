@@ -136,8 +136,6 @@
 								hideHover();
 								var proj_id = project.get('id');
 								queryParticipant(proj_id);
-								queryProviders(proj_id);
-								queryReceivers(proj_id);
 								queryTransactions(proj_id);
 							}).on('hidden', function() {
 								$this.on('mouseenter', showHover).on('mouseleave', hideHover);
@@ -151,35 +149,6 @@
 				);
 			}
 			
-			function queryProviders(id) {
-				query.query(
-					Handlebars.compile($('#provider-retrieve-sparql-template').html())({project_id:id}),
-					{
-						success: function(json) {
-							console.log("Providers:");
-							console.log(json);
-						},
-						failure: function() {
-							console.log('Error retrieving providers');
-						}
-					}
-				);
-			}
-
-			function queryReceivers(id) {
-				query.query(
-					Handlebars.compile($('#receiver-retrieve-sparql-template').html())({project_id:id}),
-					{
-						success: function(json) {
-							console.log("Receivers:");
-							console.log(json);
-						},
-						failure: function() {
-							console.log('Error retrieving receivers');
-						}
-					}
-				);
-			}
 
 			function queryParticipant(id) {
 				query.query(
