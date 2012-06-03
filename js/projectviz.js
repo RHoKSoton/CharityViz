@@ -73,25 +73,48 @@
 
 			var query = sparql.createQuery();
 			queryProject(project.get('id'));
+			var map;
 
 			function queryProject(id) {
 				query.query(
 					Handlebars.compile($('#project-retrieve-sparql-template').html())({project_id:id}),
 					{
 						success: function(json) {
-							console.log(json);
 							var countryCode = json.results.bindings[0].recipientCountry.value.substr(-2, 2);
-							console.log(countryCode);
+							var lonLat = countryCodeMap[countryCode];
+
 							project.set({
 								description: json.results.bindings[0].description.value,
 								title: json.results.bindings[0].title.value,
 							});
-							// Set up map
-							var map = new OpenLayers.Map("map" + project.get('id'));
+
 							$this.popover({
 								title: project.get('title'),
 								content: projectPopover.el
+							}).on('hover', function() {
+								// Set up map
+								if (map) {return;};
+								var ll = new OpenLayers.LonLat(lonLat[1],lonLat[0]);
+								map = new OpenLayers.Map("map" + project.get('id'), {
+									controls:[]
+								});
+								var mapnik         = new OpenLayers.Layer.OSM();
+								var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+								var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+								var position       = ll.transform( fromProjection, toProjection);
+								var zoom           = 4; 
+								map.addLayer(mapnik);
+								map.setCenter(position, zoom);
+
+								var markers = new OpenLayers.Layer.Markers("Markers");
+								map.addLayer(markers);
+								var size = new OpenLayers.Size(21,25);
+								var offset = new OpenLayers.Pixel(-(size.w/2), -size.h);
+								var icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png', size, offset);
+								markers.addMarker(new OpenLayers.Marker(ll,icon));
+								markers.addMarker(new OpenLayers.Marker(ll,icon.clone()));
 							});
+
 							$('#'+project.get('id')).on('show', function() {
 								$($this).popover('hide');
 								var proj_id = project.get('id');

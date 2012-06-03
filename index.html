@@ -15,6 +15,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.0.3/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0.beta6/handlebars.min.js"></script>
     <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+    <script src="js/countrycodes.js"></script>
     <script src="js/sparql/sparql.js"></script>
 
     <link rel="stylesheet" href="css/style.css">
@@ -33,10 +34,10 @@
                 Roll your mouse over the link to <a class="project-info-trigger" data-iati="44000-P048204">Petroleum Environment Capacity enhancement Project</a> and you should see a pop up of information all about it. We're working to add more information to these pop-ups. The information comes direct from a <a href="http://kasabi.com/dataset/iati">Linked Data version of IATI data</a>, so that more data can be integrated in future. 
 
                 <h3>Simple embedding</h3>
-                <p>To activate the tool simply add the relevent <code>data-itai</code> attribute to an element.</p>
+                <p>To activate the tool simply add the relevent <code>data-iati</code> attribute to an element.</p>
                 
                 <pre class="prettyprint linenums">
-&lt;a data-itai=&quot;44000-P048204&quot;&gt;
+&lt;a data-iati=&quot;44000-P048204&quot;&gt;
     Petroleum Environment Capacity enhancement Project
 &lt;/a&gt;</pre>
 
@@ -127,9 +128,9 @@
     </script>
 
     <script type="text/x-handlebars-template" id="project-popover-template">
+	    <div id="map{{id}}" class="map"></div>
         <div class="popover-content-container">
         	{{ description }}
-        	<div id="map{{id}}"></div>
         </div>
     </script>
 
