@@ -97,13 +97,14 @@
                  iati:providerOrg ?providerOrg;
                  iati:receiverOrg ?receiverOrg.
           
-        {
+         {
             select ?type where {
                 activity:{{{ project_id }}} iati:transaction ?trans .
                 ?trans iati:transactionType ?txtype  .
                 ?txtype skos:prefLabel ?type .
             }
-        }
+          }
+          
           {
             select ?providerTitle where {
               activity:{{{ project_id }}} iati:transaction ?trans .
