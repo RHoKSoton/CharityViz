@@ -24,6 +24,10 @@
 	height:20px;
 }
 
+address a {
+	text-shadow: none;
+}
+
 .map {
 	width:280px;
 	height:100px;
