@@ -91,17 +91,12 @@
 var u = 'http://myservice.com/endpoint';
 
 $(function() {
-  $('[data-iati]').projectViz(u);
+  $('[data-iati]').charityViz(u);
 });</pre>
     </div>
 
-    <div id="s11" class="step" data-x="3000" data-y="4200" data-scale="2">
-        <pre class="prettyprint linenums" style="font-size:40px;line-height:50px">
-var u = 'http://myservice.com/endpoint';
-
-$(function() {
-  $('[data-iati]').projectViz(u);
-});</pre>
+    <div id="s11" class="step" data-x="-1500" data-z="-2000" data-y="3000" data-rotate-z="90" data-scale="2">
+        A hack by @mikejewell, @graingert and @danpalmer
     </div>
 
 </div>
@@ -170,10 +165,10 @@ $(function() {
         <div class="modal-body">
                 {{#if address}}
             <address>
-                    <strong>{{address.name}}</strong><br>
+                    <i class="icon-home"></i></i><strong>{{address.name}}</strong><br>
                     {{address.address}}<br>
-                    <i class="icon-envelope"></i> <a href="tel:{{address.phone}}">{{address.phone}}</a><br/>
-                    <abbr title="Email">E:</abbr> <a href="mailto:{{address.email}}">{{address.email}}</a>
+                    <i class="icon-phone">tell:</i><a href="tel:{{address.phone}}">{{address.phone}}</a><br/>
+                    <i class="icon-envelope"></i> <a href="mailto:{{address.email}}">{{address.email}}</a>
                   </address>
                   {{/if}}
                 {{#if transactions}}
@@ -191,11 +186,11 @@ $(function() {
                             <tr>
                                 <td class="td0"></td>
                                 <td class="td1"><div class="left-arrow"></div></td>
-                                <td class="td2"><b>{{this.receiver}}</b><br><small>{{this.description}}</small></td>
+                                <td class="td2"><b>{{this.receiver}}</b><br><small>{{this.description}}</small><br/><b>Amount: {{this.amount}}</b></td>
                             </tr>
                         {{else}}
                                         <tr>
-                                <td class="td0"><b>{{this.provider}}</b><br><small>{{this.description}}</small></td>
+                                <td class="td0"><b>{{this.provider}}</b><br><small>{{this.description}}</small><br/><b>Amount: {{this.amount}}</b></td>
                                 <td class="td1"><div class="right-arrow"></div></td>
                                 <td class="td2"></td>
                             </tr>
