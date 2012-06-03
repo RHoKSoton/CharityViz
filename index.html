@@ -127,12 +127,12 @@
         </div>
         <div class="modal-body">
 	        	{{#if address}}
-            <address>
-			        <i class="icon-home"></i></i><strong>{{address.name}}</strong><br>
-			        {{address.address}}<br>
-                    <i class="icon-phone">tell:</i><a href="tel:{{address.phone}}">{{address.phone}}</a><br/>
-			        <i class="icon-envelope"></i> <a href="mailto:{{address.email}}">{{address.email}}</a>
-			      </address>
+                    <address>
+                        <strong>{{address.name}}</strong><br>
+                        {{address.address}}<br>
+                        <a href="tel:{{address.phone}}">{{address.phone}}</a><br/>
+                        <a href="mailto:{{address.email}}">{{address.email}}</a>
+                    </address>
 			      {{/if}}
         		{{#if transactions}}
             <table class="table table-striped transactions-table">
