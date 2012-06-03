@@ -121,6 +121,7 @@
 								queryParticipant(proj_id);
 								queryProviders(proj_id);
 								queryReceivers(proj_id);
+								queryTransactions(proj_id);
 							});
 						},
 						failure: function() {
@@ -174,7 +175,32 @@
 						}
 					}
 				);
-			}			
+			}
+
+			function queryTransactions(id) {
+				query.query(
+					Handlebars.compile($('#transaction-retrieve-sparql-template').html())({project_id:id}),
+					{
+						success: function(json) {
+							var transactions = [];
+							for (var i = 0; i < json.results.bindings.length; i++) {
+								var t = json.results.bindings[i];
+								transactions.push({
+									description:t.description.value,
+									provider: (t.providerTitle.value != "") ? t.providerTitle.value : null,
+									receiver: (t.receiverTitle.value != "") ? t.receiverTitle.value : null,
+									date: t.date.value,
+									amount: Math.abs(parseInt(t.value.value))
+								});
+							};
+							project.set({transactions:transactions});
+						},
+						failure: function() {
+							console.log('Error retrieving participants');
+						}
+					}
+				);
+			}					
 
   	});
 

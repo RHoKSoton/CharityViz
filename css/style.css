@@ -70,3 +70,7 @@
     background: linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 97%,rgba(255,255,255,1) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
 }
+
+.transactions-table .td0 { width:45%; }
+.transactions-table .td1 { width:10%; }
+.transactions-table .td2 { width:45%; }

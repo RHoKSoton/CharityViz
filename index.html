@@ -72,7 +72,7 @@
 		activity:{{{ project_id }}} iati:transaction ?trans .
 	}
 	</script>
-	
+
 	<script type="text/x-handlebars-template" id="receiver-retrieve-sparql-template">
 	SELECT DISTINCT ?receiver ?title WHERE {
 		?trans iati:receiverOrg ?receiver FILTER(!regex(str(?receiver), "^http://data.kasabi.com/dataset/iati/org/$")).
@@ -81,13 +81,29 @@
 	}
 	</script>
     
-	<script type="text/x-handlebars-template" id="-retrieve-sparql-template">
-		SELECT * WHERE {
-			activity:{{{ project_id }}} iati:transaction ?transaction .
-			?transaction iati:transactionIsoDate ?date;
-			iati:value ?value;
-			dc:description ?description . 
-		}
+	<script type="text/x-handlebars-template" id="transaction-retrieve-sparql-template">        
+        SELECT * WHERE {    
+          activity:{{{ project_id }}} iati:transaction ?trans .
+          ?trans iati:value ?value;
+                 iati:valueCurrency ?valueCurrency;
+                 iati:transactionIsoDate ?date;
+                 dc:description ?description;
+                 iati:providerOrg ?providerOrg;
+                 iati:receiverOrg ?receiverOrg.
+          {
+            select ?providerTitle where {
+              activity:{{{ project_id }}} iati:transaction ?trans .
+              ?trans iati:providerOrg ?providerOrg .
+              ?providerOrg dc:title ?providerTitle . } LIMIT 1
+          }
+          
+          {
+            select ?receiverTitle where {
+              activity:{{{ project_id }}} iati:transaction ?trans .
+              ?trans iati:receiverOrg ?receiverOrg .
+              ?recieverOrg dc:title ?receiverTitle . } LIMIT 1
+          }
+        }
     </script>
 
     <script type="text/x-handlebars-template" id="project-view-template">
@@ -96,7 +112,8 @@
             <h3 class="project-name">{{ title }} <small class="charity-name">{{ organisation }}</small></h3>
         </div>
         <div class="modal-body">
-            <table class="table table-striped">
+        		{{#if transactions}}
+            <table class="table table-striped transactions-table">
             	<thead>
             		<tr>
             			<th>Incoming</th>
@@ -105,23 +122,24 @@
             		</tr>
             	</thead>
             	<tbody>
-            		<tr>
-            			<td><h3>Test</h3></td>
-            			<td><div class="right-arrow"></div></td>
-            			<td></td>
-            		</tr>
-            		<tr>
-            			<td></td>
-            			<td><div class="left-arrow"></div></td>
-            			<td><h3>Donation</h3></td>
-            		</tr>
-            		<tr>
-            			<td><h3>Test</h3></td>
-            			<td><div class="right-arrow"></div></td>
-            			<td></td>
-            		</tr>
+            		{{#each transactions}}
+	            		{{#if this.receiver}}
+	            			<tr>
+		            			<td class="td0"></td>
+		            			<td class="td1"><div class="left-arrow"></div></td>
+		            			<td class="td2"><b>{{this.receiver}}</b><br><small>{{this.description}}</small></td>
+		            		</tr>
+	            		{{else}}
+										<tr>
+		            			<td class="td0"><b>{{this.provider}}</b><br><small>{{this.description}}</small></td>
+		            			<td class="td1"><div class="right-arrow"></div></td>
+		            			<td class="td2"></td>
+		            		</tr>
+	            		{{/if}}
+            		{{/each}}
             	</tbody>
             </table>
+            {{/if}}
             <hr/>
             <p><small>{{ description }}</small></p>
         </div>
