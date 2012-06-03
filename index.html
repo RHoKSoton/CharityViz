@@ -96,10 +96,10 @@
           }
           
           {
-            select ?recieverTitle where {
+            select ?receiverTitle where {
               activity:{{{ project_id }}} iati:transaction ?trans .
-              ?trans iati:receiverOrg ?recieverOrg .
-              ?recieverOrg dc:title ?recieverTitle . } LIMIT 1
+              ?trans iati:receiverOrg ?receiverOrg .
+              ?recieverOrg dc:title ?receiverTitle . } LIMIT 1
           }
         }
     </script>
