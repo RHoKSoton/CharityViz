@@ -72,7 +72,7 @@
 			sparql.setPrefix('activity', 'http://data.kasabi.com/dataset/iati/activity/');
 			
 			sparql.setOutput('json');
-			sparql.setMethod('POST');
+			sparql.setMethod('GET');
 
 			var query = sparql.createQuery();
 			queryProject(project.get('id'));
