@@ -41,8 +41,13 @@
 
 			var project = new Project();
 			project.set({id:$this.attr('data-iati')});
-			$('body').append('<div class="modal fade" id="' + project.get('id') + '"></div>');
-
+			$('body').append(
+			
+				Handlebars.compile('<div class="modal fade" id="{{project_id}}"></div>')({
+					"project_id" : project.get('id')
+				})
+			);
+			
 			// Setup the popover view
 			var projectPopover = new ProjectPopover({
 				model:project
